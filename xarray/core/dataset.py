@@ -2754,6 +2754,10 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords,
         if not dataframe.columns.is_unique:
             raise ValueError(
                 'cannot convert DataFrame with non-unique columns')
+            
+        cols = dataframe.columns
+        if isinstance(cols, pd.MultiIndex):
+            dataframe = dataframe.stack()
 
         idx = dataframe.index
         obj = cls()
